@@ -1,0 +1,14 @@
+export const ANDROID_TOOLBAR_SIZE = 48;
+export const ICON_SIZE = 24;
+export const HORIZONTAL_CONTENT_MARGIN = 16;
+export const CONTENT_MARGIN = 8;
+export const TOOLBAR_ELEVATION = 4;
+export const CARD_ELEVATION = 2;
+export const CARD_WIDTH = 170;
+export const CARD_HEIGHT = 210;
+export const CARD_PREVIEW_IMAGE_HEIGHT = 140;
+export const FLOATING_BUTTON_SIZE = 56;
+export const BUTTON_HEIGHT = 48;
+export const BOTTOM_BAR_HEIGHT = 56;
+export const STATUS_BAR_SIZE = 24;
+export const BOTTOM_BAR_ICON_TOP_MARGIN = 8;
