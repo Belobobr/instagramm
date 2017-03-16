@@ -19,5 +19,23 @@ module.exports = keyMirror({
 
     FAVORITES_LOADING: null,
     FAVORITES_LOADED: null,
+    FAVORITES_IDS_LOADED: null,
     FAVORITES_LOADING_ERROR: null,
+
+    ENTERING_COMMENT: null,
+    CREATING_COMMENT: null,
+    COMMENT_CREATED: null,
+    CREATING_COMMENT_ERROR: null,
+
+    COMMENTS_LOADING: null,
+    COMMENTS_LOADED: null,
+    COMMENTS_LOADING_ERROR: null,
+
+    MEDIA_ITEM_LIKING: null,
+    MEDIA_ITEM_LIKED: null,
+    MEDIA_ITEM_LIKING_ERROR: null,
+
+    MEDIA_ITEM_DISLIKING: null,
+    MEDIA_ITEM_DISLIKED: null,
+    MEDIA_ITEM_DISLIKING_ERROR: null,
 });

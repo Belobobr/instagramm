@@ -4,6 +4,8 @@ import session from './session';
 import profile from './profile';
 import hash from './hash';
 import favorites from './favorites';
+import media from './media';
+import comments from './comments';
 
 const rootReducer = combineReducers({
     navigation,
@@ -11,6 +13,8 @@ const rootReducer = combineReducers({
     profile,
     hash,
     favorites,
+    media,
+    comments,
 });
 
 export default rootReducer

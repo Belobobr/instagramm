@@ -7,6 +7,7 @@ import {
     ListView,
     Dimensions,
     ActivityIndicator,
+    TouchableOpacity,
 } from 'react-native';
 import MediaItem from './MediaItem';
 import {HORIZONTAL_CONTENT_MARGIN} from '../../constants/dimensions';
@@ -23,13 +24,20 @@ export default class FavoritesTab extends Component {
     }
 
     render() {
-        const dataSource = this.dataSource.cloneWithRows(this.props.favorites.data);
+        debugger;
+
+        var media = this.props.media.data;
+        var favoritesMedia = this.props.favorites.data.map((id) => {
+            return media[id];
+        });
+
+        const dataSource = this.dataSource.cloneWithRows(favoritesMedia);
         const content = <ListView
             enableEmptySections={true}
             contentContainerStyle={styles.list}
             dataSource={dataSource}
             renderRow={(rowData) => {
-                return <MediaItem style={styles.item} uri={rowData.images.low_resolution.url}/>
+                return <MediaItem style={styles.item} uri={rowData.images.low_resolution.url} mediaItemId={rowData.id} {...this.props}/>
             }}
         />;
 

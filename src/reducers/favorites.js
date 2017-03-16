@@ -1,10 +1,21 @@
-import {FAVORITES_LOADING, FAVORITES_LOADED, FAVORITES_LOADING_ERROR, SESSION_UN_AUTHORIZE} from '../constants/actionTypes'
+import {
+    FAVORITES_LOADING,
+    FAVORITES_LOADED,
+    FAVORITES_LOADING_ERROR,
+    SESSION_UN_AUTHORIZE,
+    MEDIA_ITEM_DISLIKING,
+    MEDIA_ITEM_DISLIKING_ERROR,
+    MEDIA_ITEM_LIKING,
+    MEDIA_ITEM_LIKING_ERROR
+} from '../constants/actionTypes'
 
 const initialState = {
-    data: {},
+    data: [],
     loading: false,
     error: false,
 };
+
+//https://github.com/markerikson/redux/blob/structuring-reducers-page/docs/recipes/reducers/09-ImmutableUpdatePatterns.md
 
 function favoritesState(state = initialState, action) {
     switch (action.type) {
@@ -12,23 +23,49 @@ function favoritesState(state = initialState, action) {
             return Object.assign({}, state, {
                 loading: true,
                 error: false,
-                data: {}
+                data: []
             });
         case FAVORITES_LOADING_ERROR:
             return Object.assign({}, state, {
                 loading: false,
                 error: true,
-                data: {}
+                data: []
             });
         case FAVORITES_LOADED:
+            var ids = action.items.map((media) => {
+                return media.id
+            });
             return Object.assign({}, state, {
                 loading: false,
                 error: false,
-                data: action.favorites,
+                data: ids,
             });
         case SESSION_UN_AUTHORIZE:
             return Object.assign({}, state, {
-                data: {}
+                data: []
+            });
+        case MEDIA_ITEM_DISLIKING:
+            var itemPosition = state.data.indexOf(action.mediaId);
+
+            return itemPosition > 0
+                ? Object.assign({}, state, {
+                    data: [
+                        ...state.data.slice(0, itemPosition),
+                        ...state.data.slice(itemPosition + 1)
+                    ],
+                })
+                : state;
+        case MEDIA_ITEM_DISLIKING_ERROR:
+            return Object.assign({}, state, {
+                data: []
+            });
+        case MEDIA_ITEM_LIKING:
+            return Object.assign({}, state, {
+                data: []
+            });
+        case MEDIA_ITEM_LIKING_ERROR:
+            return Object.assign({}, state, {
+                data: []
             });
         default:
             return state

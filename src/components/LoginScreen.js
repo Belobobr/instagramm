@@ -29,7 +29,7 @@ export default class LoginScreen extends Component {
                 source={require('./../images/instragram_logo.png')}
             />
             <TouchableOpacity onPress={() => {
-                this.props.authorize(null, this.props.handleNavigate);
+                this.props.authorize(this.props.handleNavigate);
             }}>
                 <Text style={styles.signIn}>
                     SIGN IN

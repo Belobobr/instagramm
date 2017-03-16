@@ -3,11 +3,15 @@ import {status, json} from './helper';
 
 export function loadProfile() {
     return (dispatch, getState) => {
-        dispatch(handleProfileLoading());
+        var profileLoaded = Object.keys(getState().profile.data).length !== 0;
+        if (!profileLoaded) {
+            dispatch(handleProfileLoading());
+        }
+
         const accessToken = getState().session.accessToken;
         if (accessToken != null) {
             let url = `https://api.instagram.com/v1/users/self/?access_token=${accessToken}`;
-            fetch(url)
+            return fetch(url)
                 .then(status)
                 .then(json)
                 .then(function (data) {
@@ -20,6 +24,7 @@ export function loadProfile() {
                 });
         } else {
             dispatch(handleProfileLoadingError());
+            return Promise.reject();
         }
     }
 }

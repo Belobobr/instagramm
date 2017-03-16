@@ -3,7 +3,11 @@ import {status, json} from './helper';
 
 export function loadFavorites() {
     return (dispatch, getState) => {
-        dispatch(handleFavoritesLoading());
+        var favoritesIds = getState().favorites.data.slice();
+        if (favoritesIds.length == 0) {
+            dispatch(handleFavoritesLoading());
+        }
+
         const accessToken = getState().session.accessToken;
         if (accessToken != null) {
             let url = `https://api.instagram.com/v1/users/self/media/liked?access_token=${accessToken}`;
@@ -28,8 +32,8 @@ function handleFavoritesLoading() {
     return {type: FAVORITES_LOADING}
 }
 
-function handleFavoritesLoaded(favorites) {
-    return {type: FAVORITES_LOADED, favorites}
+function handleFavoritesLoaded(items) {
+    return {type: FAVORITES_LOADED, items}
 }
 
 function handleFavoritesError(error) {

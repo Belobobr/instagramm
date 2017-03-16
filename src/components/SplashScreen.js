@@ -7,18 +7,11 @@ import {
     AsyncStorage,
     ActivityIndicator
 } from 'react-native';
-import {ACCESS_TOKEN} from '../actions/session';
 
 export default class SplashScreen extends Component {
 
     componentDidMount() {
-        AsyncStorage.getItem(ACCESS_TOKEN).then((accessToken) => {
-            if (accessToken != null) {
-                this.props.authorize(accessToken, this.props.handleNavigate);
-            } else {
-                this.props.unAuthorize(this.props.handleNavigate);
-            }
-        });
+        this.props.initApp(this.props.handleNavigate);
     }
 
     render() {

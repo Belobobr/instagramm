@@ -11,14 +11,6 @@ import HashTagTab from './HashTagTab';
 import FavoritesTab from './FavoritesTab';
 import ProfileTab from './ProfileTab';
 
-const itemRoute = {
-    type: 'push',
-    route: {
-        key: 'item',
-        title: 'item'
-    }
-};
-
 export default class MainScreen extends Component {
 
     render() {

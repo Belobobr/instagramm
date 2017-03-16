@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import LoginScreen from './LoginScreen';
 import MainScreen from './mainScreen/index';
 import SplashScreen from './SplashScreen';
+import MediaitemScreen from './MediaItemScreen';
 
 import {
     BackAndroid,
@@ -36,8 +37,8 @@ class SocialNetworkApp extends Component {
                 return <LoginScreen {...this.props} handleNavigate={this.handleNavigate.bind(this)}/>;
             case 'main':
                 return <MainScreen {...this.props} handleNavigate={this.handleNavigate.bind(this)}/>;
-            // case 'item':
-            //     return <ItemScreen {...this.props} handleNavigate={this.handleNavigate.bind(this)} handleBackAction={this.handleBackAction.bind(this)}/>;
+            case 'mediaItem':
+                return <MediaitemScreen {...this.props} handleNavigate={this.handleNavigate.bind(this)} handleBackAction={this.handleBackAction.bind(this)}/>;
         }
     }
 

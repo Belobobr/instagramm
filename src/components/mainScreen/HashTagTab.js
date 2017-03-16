@@ -8,7 +8,7 @@ import {
     Dimensions,
     ActivityIndicator,
 } from 'react-native';
-import MediaItem from './MediaItem';
+import MediaItem from './MediaItem';;
 
 export default class HashTagTab extends Component {
 
@@ -22,13 +22,18 @@ export default class HashTagTab extends Component {
     }
 
     render() {
-        const dataSource = this.dataSource.cloneWithRows(this.props.hash.data);
+        var media = this.props.media.data;
+        var hashMedia = this.props.hash.data.map((id) => {
+            return media[id];
+        });
+
+        const dataSource = this.dataSource.cloneWithRows(hashMedia);
         const content = <ListView
             enableEmptySections={true}
             contentContainerStyle={styles.list}
             dataSource={dataSource}
             renderRow={(rowData) => {
-                return <MediaItem style={styles.item} uri={rowData.images.low_resolution.url}/>
+                return <MediaItem uri={rowData.images.low_resolution.url} mediaItemId={rowData.id} {...this.props}/>
             }}
         />;
 
@@ -53,7 +58,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-    }
+    },
 });
 
 

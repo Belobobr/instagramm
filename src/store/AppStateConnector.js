@@ -6,6 +6,8 @@ import * as sessionActionCreators from '../actions/session';
 import * as profileActionCreators from '../actions/profile';
 import * as hashActionCreators from '../actions/hash';
 import * as favoritesActionCreators from '../actions/favorites';
+import * as commentsActionCreators from '../actions/comments';
+import * as likesActionCreators from '../actions/likes';
 
 function mapStateToProps(state) {
     return {
@@ -14,11 +16,23 @@ function mapStateToProps(state) {
         profile: state.profile,
         hash: state.hash,
         favorites: state.favorites,
+        media: state.media,
+        comments: state.comments,
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(Object.assign({}, navigationActionCreators, sessionActionCreators, profileActionCreators, hashActionCreators, favoritesActionCreators), dispatch);
+    return bindActionCreators(
+        Object.assign(
+            {},
+            navigationActionCreators,
+            sessionActionCreators,
+            profileActionCreators,
+            hashActionCreators,
+            favoritesActionCreators,
+            commentsActionCreators,
+            likesActionCreators,
+        ), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SocialNetworkApp)

@@ -1,7 +1,7 @@
-import {HASH_MEDIA_LOADING, HASH_MEDIA_LOADING_ERROR, HASH_MEDIA_LOADED, ITEMS_ADD, SESSION_UN_AUTHORIZE} from '../constants/actionTypes'
+import {HASH_MEDIA_LOADING, HASH_MEDIA_LOADING_ERROR, HASH_MEDIA_LOADED, SESSION_UN_AUTHORIZE} from '../constants/actionTypes'
 
 const initialState = {
-    data: {},
+    data: [],
     loading: false,
     error: false,
 };
@@ -12,23 +12,24 @@ function itemsState(state = initialState, action) {
             return Object.assign({}, state, {
                 loading: true,
                 error: false,
-                data: {}
+                data: []
             });
         case HASH_MEDIA_LOADING_ERROR:
             return Object.assign({}, state, {
                 loading: false,
                 error: true,
-                data: {}
+                data: []
             });
         case HASH_MEDIA_LOADED:
+            var ids = action.items.map((media) => {return media.id});
             return Object.assign({}, state, {
                 loading: false,
                 error: false,
-                data: action.items,
+                data: ids,
             });
         case SESSION_UN_AUTHORIZE:
             return Object.assign({}, state, {
-                data: {}
+                data: []
             });
         default:
             return state
