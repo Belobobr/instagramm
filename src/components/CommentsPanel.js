@@ -29,7 +29,6 @@ export default class CommentsPanel extends Component {
         const profile = this.props.profile.data;
         const dataSource = this.dataSource.cloneWithRows(this.state.showAll ? comments : comments.slice(-5));
 
-
         var commentsView = <ListView
             enableEmptySections={true}
             style={styles.comments}

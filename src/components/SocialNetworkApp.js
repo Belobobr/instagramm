@@ -70,7 +70,9 @@ class SocialNetworkApp extends Component {
             <NavigationCardStack
                 navigationState={this.props.navigation}
                 onNavigate={this.handleNavigate.bind(this)}
-                renderScene={this.renderScene}/>
+                renderScene={this.renderScene}
+                onNavigateBack={this.handleBackAction}
+            />
         )
     }
 }

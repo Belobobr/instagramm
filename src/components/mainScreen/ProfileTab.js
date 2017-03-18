@@ -5,9 +5,10 @@ import {
     View,
     Image,
     ActivityIndicator,
+    TouchableOpacity,
 } from 'react-native';
-import {LoginButton} from 'react-native-fbsdk';
 import {CONTENT_MARGIN, HORIZONTAL_CONTENT_MARGIN} from '../../constants/dimensions';
+
 
 export default class ProfileTab extends Component {
 
@@ -27,6 +28,12 @@ export default class ProfileTab extends Component {
                 <Text style={styles.userName}>{profile.username}</Text>
                 <Text style={styles.fieldDescription}>{'Full name'}</Text>
                 <Text style={styles.fullName}>{profile.full_name}</Text>
+
+                <TouchableOpacity onPress={()=>{
+                    this.props.unAuthorize(this.props.handleNavigate);
+                }}>
+                    <Text style={styles.signOut}>{'SIGN OUT'}</Text>
+                </TouchableOpacity>
             </View>
         </View>;
 
@@ -71,6 +78,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
+    },
+    signOut: {
+        color: '#2196F3',
+        fontSize: 14,
     }
 });
 

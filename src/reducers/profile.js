@@ -1,4 +1,9 @@
-import {PROFILE_LOADING, PROFILE_LOADING_ERROR, PROFILE_LOADED, SESSION_UN_AUTHORIZE} from '../constants/actionTypes'
+import {
+    PROFILE_LOADING,
+    PROFILE_LOADING_ERROR,
+    PROFILE_LOADED,
+    SESSION_UN_AUTHORIZE
+} from '../constants/actionTypes'
 
 const initialState = {
     data: {},

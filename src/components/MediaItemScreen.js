@@ -22,6 +22,7 @@ export default class MediaItemScreen extends Component {
         var mediaItemId = routes[routes.length - 1].mediaItemId;
 
         this.props.loadComments(mediaItemId);
+        this.props.enteringComment('');
     }
 
     render() {

@@ -1,11 +1,11 @@
-import {SESSION_AUTHORIZE, SESSION_UN_AUTHORIZE} from '../constants/actionTypes'
 import {AsyncStorage, Linking} from 'react-native';
+import CookieManager from 'react-native-cookies';
 import {CLIENT_ID} from '../constants/keys';
 import {loadProfile} from './profile';
 import {clearHashData} from './hash';
 import {resetToMainRoute, resetToUnAuthorizedRoutes} from './../constants/routes';
-
-export const ACCESS_TOKEN = 'ACCESS_TOKEN';
+import {SESSION_AUTHORIZE, SESSION_UN_AUTHORIZE} from '../constants/actionTypes'
+import {ACCESS_TOKEN_KEY} from './../constants/storage';
 
 const REDIRECT_URI = 'https://instagramm-redirect.herokuapp.com/index.html';
 const URL = `https://api.instagram.com/oauth/authorize/?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=public_content`;
@@ -14,11 +14,11 @@ const URL = `https://api.instagram.com/oauth/authorize/?client_id=${CLIENT_ID}&r
 
 export function initApp(handleNavigate) {
     return (dispatch) => {
-        AsyncStorage.getItem(ACCESS_TOKEN).then((accessToken) => {
+        AsyncStorage.getItem(ACCESS_TOKEN_KEY).then((accessToken) => {
             if (accessToken != null) {
                 onAuthorized(accessToken, dispatch, handleNavigate);
             } else {
-                onUnAuthorized(this.props.handleNavigate);
+                onUnAuthorized(handleNavigate);
             }
         });
     }
@@ -26,7 +26,7 @@ export function initApp(handleNavigate) {
 
 function onAuthorized(accessToken, dispatch, handleNavigate) {
     dispatch(handleAuthorized(accessToken));
-    dispatch(loadProfile()).then(()=>{
+    dispatch(loadProfile()).then(()=> {
         handleNavigate(resetToMainRoute);
     });
 }
@@ -38,12 +38,24 @@ function onUnAuthorized(handleNavigate) {
 export function authorize(handleNavigate) {
     return (dispatch) => {
         Linking.addEventListener('url', handleOpenURL);
+        CookieManager.getAll((err, res) => {
+            console.log('before login!');
+            console.log(err);
+            console.log(res);
+        });
+
 
         function handleOpenURL(event) {
             let accessToken = event.url.split('=')[1];
+            CookieManager.getAll((err, res) => {
+                console.log('after login!');
+                console.log(err);
+                console.log(res);
+            });
+            console.log('access token: ' + accessToken);
 
             if (accessToken != null) {
-                AsyncStorage.setItem(ACCESS_TOKEN, accessToken)
+                AsyncStorage.setItem(ACCESS_TOKEN_KEY, accessToken)
                     .then(() => {
                         onAuthorized(accessToken, dispatch, handleNavigate);
                     });
@@ -59,13 +71,30 @@ export function authorize(handleNavigate) {
 }
 
 export function unAuthorize(handleNavigate) {
+    CookieManager.getAll((err, res) => {
+        console.log('before unAuthorize!');
+        console.log(err);
+        console.log(res);
+    });
+
     return (dispatch) => {
-        AsyncStorage.setItem(ACCESS_TOKEN, '')
-            .then(() => {
-                dispatch(clearHashData());
-                dispatch(handleUnAuthorized());
-                onUnAuthorized(handleNavigate);
+        CookieManager.clearAll((err, res) => {
+            CookieManager.getAll((err, res) => {
+                console.log('after unAuthorize!');
+                console.log(err);
+                console.log(res);
             });
+            if (err) {
+                console.error('Error occured during clearing cookies');
+            }
+
+            AsyncStorage.setItem(ACCESS_TOKEN_KEY, '')
+                .then(() => {
+                    dispatch(clearHashData());
+                    dispatch(handleUnAuthorized());
+                    onUnAuthorized(handleNavigate);
+                });
+        });
     }
 }
 

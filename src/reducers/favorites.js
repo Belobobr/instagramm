@@ -44,29 +44,38 @@ function favoritesState(state = initialState, action) {
             return Object.assign({}, state, {
                 data: []
             });
-        case MEDIA_ITEM_DISLIKING:
-            var itemPosition = state.data.indexOf(action.mediaId);
+        case MEDIA_ITEM_DISLIKING: {
+            let itemPosition = state.data.indexOf(action.mediaId);
 
-            return itemPosition > 0
+            return itemPosition >= 0
                 ? Object.assign({}, state, {
-                    data: [
-                        ...state.data.slice(0, itemPosition),
-                        ...state.data.slice(itemPosition + 1)
-                    ],
-                })
+                data: [
+                    ...state.data.slice(0, itemPosition),
+                    ...state.data.slice(itemPosition + 1)
+                ],
+            })
                 : state;
+        }
         case MEDIA_ITEM_DISLIKING_ERROR:
             return Object.assign({}, state, {
-                data: []
+                data: state.data.concat(action.mediaId)
             });
         case MEDIA_ITEM_LIKING:
             return Object.assign({}, state, {
-                data: []
+                data: state.data.concat(action.mediaId)
             });
-        case MEDIA_ITEM_LIKING_ERROR:
-            return Object.assign({}, state, {
-                data: []
-            });
+        case MEDIA_ITEM_LIKING_ERROR: {
+            let itemPosition = state.data.indexOf(action.mediaId);
+
+            return itemPosition > 0
+                ? Object.assign({}, state, {
+                data: [
+                    ...state.data.slice(0, itemPosition),
+                    ...state.data.slice(itemPosition + 1)
+                ],
+            })
+                : state;
+        }
         default:
             return state
     }

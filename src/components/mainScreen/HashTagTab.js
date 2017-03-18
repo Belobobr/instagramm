@@ -35,6 +35,10 @@ export default class HashTagTab extends Component {
             renderRow={(rowData) => {
                 return <MediaItem uri={rowData.images.low_resolution.url} mediaItemId={rowData.id} {...this.props}/>
             }}
+            onEndReached={() => {
+                this.props.loadNextPhotosByHash();
+            }}
+            onEndReachedThreshold={500}
         />;
 
         const loading = <View style={styles.loading}>
@@ -50,7 +54,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        flex: 1,
         backgroundColor: '#ffffff',
     },
     loading: {

@@ -1,5 +1,11 @@
-import {ROUTE_PUSH, ROUTE_POP, ROUTE_RESET} from '../constants/actionTypes'
-import {NavigationExperimental} from 'react-native'
+import {
+    ROUTE_PUSH,
+    ROUTE_POP,
+    ROUTE_RESET
+} from '../constants/actionTypes'
+import {
+    NavigationExperimental
+} from 'react-native'
 const {
     StateUtils: NavigationStateUtils
 } = NavigationExperimental;

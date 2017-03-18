@@ -47,6 +47,7 @@ export default class Tabs extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#FFF',
     },
     bottomBarContainer: {
         height: BOTTOM_BAR_HEIGHT,

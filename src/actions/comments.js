@@ -30,12 +30,11 @@ export function makeComment(mediaId) {
                 .then(status)
                 .then(json)
                 .then(function (data) {
-                    debugger;
-                    console.log('Request succeeded with JSON response', data);
+                    console.log('Make comment succeeded with JSON response', data);
                     dispatch(handleCommentCreated(data.data));
                 })
                 .catch(function (error) {
-                    console.log('Request failed', error);
+                    console.log('Make comment failed', error);
                     dispatch(handleCreatingCommentError());
                 });
         } else {
@@ -60,12 +59,11 @@ export function loadComments(mediaId) {
                 .then(status)
                 .then(json)
                 .then(function (data) {
-                    debugger;
-                    console.log('Request succeeded with JSON response', data);
+                    console.log('Load comments succeeded with JSON response', data);
                     dispatch(handleCommentsLoaded(data.data));
                 })
                 .catch(function (error) {
-                    console.log('Request failed', error);
+                    console.log('Load comments failed', error);
                     dispatch(handleCommentsLoadingError());
                 });
         } else {

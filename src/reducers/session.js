@@ -1,4 +1,7 @@
-import {SESSION_AUTHORIZE, SESSION_UN_AUTHORIZE} from '../constants/actionTypes'
+import {
+    SESSION_AUTHORIZE,
+    SESSION_UN_AUTHORIZE
+} from '../constants/actionTypes'
 
 const initialState = {
     accessToken: null,

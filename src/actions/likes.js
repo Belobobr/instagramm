@@ -24,11 +24,11 @@ export function like(mediaId) {
                 .then(status)
                 .then(json)
                 .then(function (data) {
-                    console.log('Request succeeded with JSON response', data);
+                    console.log('Like succeeded with JSON response', data);
                     dispatch(handleMediaItemLiked(mediaId));
                 })
                 .catch(function (error) {
-                    console.log('Request failed', error);
+                    console.log('Like failed', error);
                     dispatch(handleMediaItemLikingError(mediaId));
                 });
         } else {
@@ -49,11 +49,11 @@ export function dislike(mediaId) {
                 .then(status)
                 .then(json)
                 .then(function (data) {
-                    console.log('Request succeeded with JSON response', data);
+                    console.log('Dislike succeeded with JSON response', data);
                     dispatch(handleMediaItemDisliked(mediaId));
                 })
                 .catch(function (error) {
-                    console.log('Request failed', error);
+                    console.log('Dislike failed', error);
                     dispatch(handleMediaItemDislikingError(mediaId));
                 });
         } else {

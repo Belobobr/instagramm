@@ -1,6 +1,8 @@
 import keyMirror from 'keymirror';
 
 module.exports = keyMirror({
+    ITEMS_ADD: null,
+
     ROUTE_PUSH: null,
     ROUTE_POP: null,
     ROUTE_RESET: null,
@@ -15,7 +17,10 @@ module.exports = keyMirror({
     HASH_MEDIA_LOADING: null,
     HASH_MEDIA_LOADED: null,
     HASH_MEDIA_LOADING_ERROR: null,
-    ITEMS_ADD: null,
+    HASH_MEDIA_NEXT_URL: null,
+    HASH_MEDIA_LOADING_NEXT: null,
+    HASH_MEDIA_LOADED_NEXT: null,
+    HASH_MEDIA_LOADING_NEXT_ERROR: null,
 
     FAVORITES_LOADING: null,
     FAVORITES_LOADED: null,

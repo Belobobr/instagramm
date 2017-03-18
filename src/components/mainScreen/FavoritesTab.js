@@ -24,8 +24,6 @@ export default class FavoritesTab extends Component {
     }
 
     render() {
-        debugger;
-
         var media = this.props.media.data;
         var favoritesMedia = this.props.favorites.data.map((id) => {
             return media[id];
@@ -54,7 +52,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        flex: 1,
         backgroundColor: '#ffffff',
     },
     item: {

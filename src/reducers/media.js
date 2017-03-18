@@ -1,6 +1,7 @@
 import {
     FAVORITES_LOADED,
     HASH_MEDIA_LOADED,
+    HASH_MEDIA_LOADED_NEXT,
     SESSION_UN_AUTHORIZE,
     MEDIA_ITEM_DISLIKING,
     MEDIA_ITEM_DISLIKING_ERROR,
@@ -17,7 +18,8 @@ const initialState = {
 function itemsState(state = initialState, action) {
     switch (action.type) {
         case FAVORITES_LOADED:
-        case HASH_MEDIA_LOADED: {
+        case HASH_MEDIA_LOADED:
+        case HASH_MEDIA_LOADED_NEXT: {
             var mergedItems = merge(state.data, action.items);
             return Object.assign({}, state, {
                 // data: Object.assign({}, state.data, action.items),
