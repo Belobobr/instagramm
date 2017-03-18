@@ -1,14 +1,17 @@
 import {AsyncStorage, Linking} from 'react-native';
-import CookieManager from 'react-native-cookies';
 import {CLIENT_ID} from '../constants/keys';
 import {loadProfile} from './profile';
 import {clearHashData} from './hash';
 import {resetToMainRoute, resetToUnAuthorizedRoutes} from './../constants/routes';
-import {SESSION_AUTHORIZE, SESSION_UN_AUTHORIZE} from '../constants/actionTypes'
+import {
+    SESSION_AUTHORIZE,
+    SESSION_UN_AUTHORIZE
+} from '../constants/actionTypes'
 import {ACCESS_TOKEN_KEY} from './../constants/storage';
 
 const REDIRECT_URI = 'https://instagramm-redirect.herokuapp.com/index.html';
-const URL = `https://api.instagram.com/oauth/authorize/?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=public_content`;
+const SIGN_IN_URL = `https://api.instagram.com/oauth/authorize/?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=public_content`;
+const SIGN_OUT_URL = `https://instagram.com/accounts/logout/`;
 
 //TODO make method init (will authorize and load some data (profile)
 
@@ -38,20 +41,9 @@ function onUnAuthorized(handleNavigate) {
 export function authorize(handleNavigate) {
     return (dispatch) => {
         Linking.addEventListener('url', handleOpenURL);
-        CookieManager.getAll((err, res) => {
-            console.log('before login!');
-            console.log(err);
-            console.log(res);
-        });
-
 
         function handleOpenURL(event) {
             let accessToken = event.url.split('=')[1];
-            CookieManager.getAll((err, res) => {
-                console.log('after login!');
-                console.log(err);
-                console.log(res);
-            });
             console.log('access token: ' + accessToken);
 
             if (accessToken != null) {
@@ -64,37 +56,26 @@ export function authorize(handleNavigate) {
             Linking.removeEventListener('url', handleOpenURL)
         }
 
-        Linking.openURL(URL).catch((err) => {
+        Linking.openURL(SIGN_IN_URL).catch((err) => {
             console.error('An error occurred', err)
         });
     }
 }
 
 export function unAuthorize(handleNavigate) {
-    CookieManager.getAll((err, res) => {
-        console.log('before unAuthorize!');
-        console.log(err);
-        console.log(res);
-    });
-
     return (dispatch) => {
-        CookieManager.clearAll((err, res) => {
-            CookieManager.getAll((err, res) => {
-                console.log('after unAuthorize!');
-                console.log(err);
-                console.log(res);
+        Linking.openURL(SIGN_OUT_URL)
+            .then(() => {
+                AsyncStorage.setItem(ACCESS_TOKEN_KEY, '')
+                    .then(() => {
+                        dispatch(clearHashData());
+                        dispatch(handleUnAuthorized());
+                        onUnAuthorized(handleNavigate);
+                    });
+            })
+            .catch((err) => {
+                console.error('An error occurred', err)
             });
-            if (err) {
-                console.error('Error occured during clearing cookies');
-            }
-
-            AsyncStorage.setItem(ACCESS_TOKEN_KEY, '')
-                .then(() => {
-                    dispatch(clearHashData());
-                    dispatch(handleUnAuthorized());
-                    onUnAuthorized(handleNavigate);
-                });
-        });
     }
 }
 

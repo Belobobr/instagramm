@@ -21,49 +21,57 @@ const initialState = {
 
 function favoritesState(state = initialState, action) {
     switch (action.type) {
+        case SESSION_UN_AUTHORIZE:
+            return {
+                ...state,
+                data: []
+            };
         case ENTERING_COMMENT:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 createdComment: action.comment,
-            });
+            };
         case CREATING_COMMENT:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 creatingComment: true,
                 creatingCommentError: false,
-            });
+            };
         case COMMENT_CREATED:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 creatingComment: false,
                 creatingCommentError: false,
                 createdComment: '',
                 data: state.data.concat(action.comment)
-            });
+            };
         case CREATING_COMMENT_ERROR:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 creatingComment: false,
                 creatingCommentError: true,
-            });
+            };
         case COMMENTS_LOADING:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 loading: true,
                 error: false,
                 data: []
-            });
+            };
         case COMMENTS_LOADING_ERROR:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 loading: false,
                 error: true,
                 data: []
-            });
+            };
         case COMMENTS_LOADED:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 loading: false,
                 error: false,
                 data: action.comments,
-            });
-        case SESSION_UN_AUTHORIZE:
-            return Object.assign({}, state, {
-                data: []
-            });
+            };
         default:
             return state
     }

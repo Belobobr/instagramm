@@ -10,9 +10,15 @@ const initialState = {
 function sessionState(state = initialState, action) {
     switch (action.type) {
         case SESSION_AUTHORIZE:
-            return Object.assign({}, state, {accessToken: action.accessToken});
+            return {
+                ...state,
+                accessToken: action.accessToken
+            };
         case SESSION_UN_AUTHORIZE:
-            return Object.assign({}, state, {accessToken: null});
+            return {
+                ...state,
+                accessToken: null
+            };
         default:
             return state
     }

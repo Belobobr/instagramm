@@ -17,67 +17,29 @@ const initialState = {
 
 function itemsState(state = initialState, action) {
     switch (action.type) {
+        case SESSION_UN_AUTHORIZE: {
+            return {
+                ...state,
+                data: {}
+            };
+        }
         case FAVORITES_LOADED:
         case HASH_MEDIA_LOADED:
         case HASH_MEDIA_LOADED_NEXT: {
             var mergedItems = merge(state.data, action.items);
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 // data: Object.assign({}, state.data, action.items),
                 data: mergedItems,
-            });
+            };
         }
-        case SESSION_UN_AUTHORIZE: {
-            return Object.assign({}, state, {
-                data: {}
-            });
-        }
-        case MEDIA_ITEM_DISLIKING: {
-            return Object.assign({}, state, {
-                data: {
-                    ...state.data,
-                    [action.mediaId] : {
-                        ...state.data[action.mediaId],
-                        user_has_liked: false,
-                        likes: {
-                            count: --state.data[action.mediaId].likes.count
-                        }
-                    }
-                }
-            });
-        }
-        case MEDIA_ITEM_DISLIKING_ERROR: {
-            return Object.assign({}, state, {
-                data: {
-                    ...state.data,
-                    [action.mediaId] : {
-                        ...state.data[action.mediaId],
-                        user_has_liked: true,
-                        likes: {
-                            count: ++state.data[action.mediaId].likes.count
-                        }
-                    }
-                }
-            });
-        }
-        case MEDIA_ITEM_LIKING: {
-            return Object.assign({}, state, {
-                data: {
-                    ...state.data,
-                    [action.mediaId] : {
-                        ...state.data[action.mediaId],
-                        user_has_liked: true,
-                        likes: {
-                            count: ++state.data[action.mediaId].likes.count
-                        }
-                    }
-                }
-            });
-        }
+        case MEDIA_ITEM_DISLIKING:
         case MEDIA_ITEM_LIKING_ERROR: {
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 data: {
                     ...state.data,
-                    [action.mediaId] : {
+                    [action.mediaId]: {
                         ...state.data[action.mediaId],
                         user_has_liked: false,
                         likes: {
@@ -85,7 +47,23 @@ function itemsState(state = initialState, action) {
                         }
                     }
                 }
-            });
+            };
+        }
+        case MEDIA_ITEM_LIKING:
+        case MEDIA_ITEM_DISLIKING_ERROR: {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [action.mediaId]: {
+                        ...state.data[action.mediaId],
+                        user_has_liked: true,
+                        likes: {
+                            count: ++state.data[action.mediaId].likes.count
+                        }
+                    }
+                }
+            };
         }
         default:
             return state
